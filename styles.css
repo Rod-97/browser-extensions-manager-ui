@@ -31,12 +31,30 @@ body.dark-mode {
   background-color: var(--neutral-900);
 }
 
-body.light-mode header {
-  background-color: var(--neutral-0);
+body.light-mode {
+  .header,
+  .filter-btn {
+    background-color: var(--neutral-0);
+  }
+
+  .header,
+  .filter-container,
+  .filter-btn {
+    color: var(--neutral-900);
+  }
 }
 
-body.dark-mode header {
-  background-color: var(--neutral-800);
+body.dark-mode {
+  .header,
+  .filter-btn {
+    background-color: var(--neutral-800);
+  }
+
+  .header,
+  .filter-container,
+  .filter-btn {
+    color: var(--neutral-0);
+  }
 }
 
 .header {
@@ -79,9 +97,34 @@ body.dark-mode header {
   background-color: var(--neutral-100);
 }
 
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 30px 20px 20px 20px;
+
+  border: 3px solid red;
+}
+
+.filter-btn {
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  font-weight: 600;
+}
+
 @media screen and (min-width: 1440px) {
   body {
     padding-left: 100px;
     padding-right: 100px;
+  }
+
+  .filter-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 40px;
   }
 }
