@@ -3,6 +3,7 @@ import data from "./data.js";
 handleDarkLightModes();
 displayExtensions();
 handleSwitchToggle();
+handlefilterButtons();
 
 function handleDarkLightModes() {
   const body = document.body;
@@ -96,5 +97,17 @@ function handleSwitchToggle() {
     extensionElement.dataset.status = extensionData.isActive
       ? "active"
       : "inactive";
+  });
+}
+
+function handlefilterButtons() {
+  const filterButtons = document.querySelectorAll(".filter-btn");
+
+  filterButtons.forEach((filterBtn) => {
+    filterBtn.addEventListener("click", () => {
+      filterButtons.forEach((b) => b.classList.remove("selected"));
+      filterBtn.classList.add("selected");
+      displayExtensions(filterBtn.dataset.filter);
+    });
   });
 }
