@@ -87,9 +87,9 @@ function displayExtensions(filter = "All") {
         (filter === "Active" && !extension.isActive) ||
         (filter === "Inactive" && extension.isActive)
       ) {
-        return;
+        return false;
       }
-      return extension;
+      return true;
     })
     .map((extension) => renderExtensionCard(extension))
     .join("");
