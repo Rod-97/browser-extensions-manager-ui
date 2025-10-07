@@ -1,36 +1,41 @@
 import data from "./data.js";
 
-const body = document.body;
+handleDarkLightModes();
+displayExtensions();
 
-function setBgColor() {
-  const iconSun = document.getElementById("icon-sun");
-  const iconMoon = document.getElementById("icon-moon");
-  const logoText = document.getElementById("logo-text");
+function handleDarkLightModes() {
+  const body = document.body;
 
-  if (body.classList.contains("dark-mode")) {
-    iconSun.classList.add("active");
-    iconMoon.classList.remove("active");
-    logoText.setAttribute("fill", "#FFFFFF");
-  } else if (body.classList.contains("light-mode")) {
-    iconMoon.classList.add("active");
-    iconSun.classList.remove("active");
-    logoText.setAttribute("fill", "#091540");
+  function setBgColor() {
+    const iconSun = document.getElementById("icon-sun");
+    const iconMoon = document.getElementById("icon-moon");
+    const logoText = document.getElementById("logo-text");
+
+    if (body.classList.contains("dark-mode")) {
+      iconSun.classList.add("active");
+      iconMoon.classList.remove("active");
+      logoText.setAttribute("fill", "#FFFFFF");
+    } else if (body.classList.contains("light-mode")) {
+      iconMoon.classList.add("active");
+      iconSun.classList.remove("active");
+      logoText.setAttribute("fill", "#091540");
+    }
   }
+
+  setBgColor();
+
+  document.getElementById("toggle-bg").addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    body.classList.toggle("light-mode");
+    setBgColor();
+  });
 }
 
-setBgColor();
-
-document.getElementById("toggle-bg").addEventListener("click", () => {
-  body.classList.toggle("dark-mode");
-  body.classList.toggle("light-mode");
-  setBgColor();
-});
-
-function displayExtensions() {
+function displayExtensions(filter = "All") {
   function renderExtensionCard(extension) {
     const { logo, name, description, isActive } = extension;
 
-    return `<div class="extension" data-status="${
+    return `<div id="${name}" class="extension" data-status="${
       isActive ? "active" : "inactive"
     }">
           <div class="info">
@@ -57,10 +62,36 @@ function displayExtensions() {
         </div>`;
   }
 
+  function handleSwitchToggle() {
+    const extensionElements = document.querySelectorAll(".extension");
+
+    for (let i = 0; i < extensionElements.length; i++) {
+      const extensionElement = extensionElements[i];
+      const switchInput = extensionElement.querySelectorAll(".switch-input")[0];
+
+      switchInput.addEventListener("change", () => {
+        const element = data.find(
+          (element) => element.name === extensionElement.id
+        );
+        element.isActive = !element.isActive;
+        extensionElement.dataset.status =
+          extensionElement.dataset.status === "active" ? "inactive" : "active";
+      });
+    }
+  }
+
   const container = document.querySelectorAll(".extensions-container")[0];
   container.innerHTML = data
+    .filter((extension) => {
+      if (
+        (filter === "Active" && !extension.isActive) ||
+        (filter === "Inactive" && extension.isActive)
+      ) {
+        return;
+      }
+      return extension;
+    })
     .map((extension) => renderExtensionCard(extension))
     .join("");
+  handleSwitchToggle();
 }
-
-displayExtensions();
