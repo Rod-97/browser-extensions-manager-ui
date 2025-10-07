@@ -1,3 +1,5 @@
+import data from "./data.js";
+
 const body = document.body;
 
 function setBgColor() {
@@ -23,3 +25,42 @@ document.getElementById("toggle-bg").addEventListener("click", () => {
   body.classList.toggle("light-mode");
   setBgColor();
 });
+
+function displayExtensions() {
+  function renderExtensionCard(extension) {
+    const { logo, name, description, isActive } = extension;
+
+    return `<div class="extension" data-status="${
+      isActive ? "active" : "inactive"
+    }">
+          <div class="info">
+            <div class="img-container">
+              <img src="${logo}" alt="${name}" />
+            </div>
+
+            <div class="text">
+              <h2>${name}</h2>
+              <p>
+                ${description}
+              </p>
+            </div>
+          </div>
+          <div class="buttons">
+            <button class="remove-btn">Remove</button>
+            <label class="switch">
+              <input class="switch-input" type="checkbox" ${
+                isActive ? "checked" : ""
+              } />
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>`;
+  }
+
+  const container = document.querySelectorAll(".extensions-container")[0];
+  container.innerHTML = data
+    .map((extension) => renderExtensionCard(extension))
+    .join("");
+}
+
+displayExtensions();
