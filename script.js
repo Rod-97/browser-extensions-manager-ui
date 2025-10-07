@@ -2,6 +2,7 @@ import data from "./data.js";
 
 handleDarkLightModes();
 displayExtensions();
+handleSwitchToggle();
 
 function handleDarkLightModes() {
   const body = document.body;
@@ -32,6 +33,20 @@ function handleDarkLightModes() {
 }
 
 function displayExtensions(filter = "All") {
+  const container = document.querySelectorAll(".extensions-container")[0];
+  container.innerHTML = data
+    .filter((extension) => {
+      if (
+        (filter === "Active" && !extension.isActive) ||
+        (filter === "Inactive" && extension.isActive)
+      ) {
+        return false;
+      }
+      return true;
+    })
+    .map((extension) => renderExtensionCard(extension))
+    .join("");
+
   function renderExtensionCard(extension) {
     const { logo, name, description, isActive } = extension;
 
@@ -61,37 +76,25 @@ function displayExtensions(filter = "All") {
           </div>
         </div>`;
   }
+}
 
-  function handleSwitchToggle() {
-    const extensionElements = document.querySelectorAll(".extension");
+function handleSwitchToggle() {
+  const extensionsContainer = document.querySelectorAll(
+    ".extensions-container"
+  )[0];
 
-    for (let i = 0; i < extensionElements.length; i++) {
-      const extensionElement = extensionElements[i];
-      const switchInput = extensionElement.querySelectorAll(".switch-input")[0];
+  extensionsContainer.addEventListener("change", (event) => {
+    if (!event.target.classList.contains("switch-input")) return;
 
-      switchInput.addEventListener("change", () => {
-        const element = data.find(
-          (element) => element.name === extensionElement.id
-        );
-        element.isActive = !element.isActive;
-        extensionElement.dataset.status =
-          extensionElement.dataset.status === "active" ? "inactive" : "active";
-      });
-    }
-  }
+    const extensionElement = event.target.closest(".extension");
 
-  const container = document.querySelectorAll(".extensions-container")[0];
-  container.innerHTML = data
-    .filter((extension) => {
-      if (
-        (filter === "Active" && !extension.isActive) ||
-        (filter === "Inactive" && extension.isActive)
-      ) {
-        return false;
-      }
-      return true;
-    })
-    .map((extension) => renderExtensionCard(extension))
-    .join("");
-  handleSwitchToggle();
+    const extensionData = data.find(
+      (element) => element.name === extensionElement.id
+    );
+
+    extensionData.isActive = !extensionData.isActive;
+    extensionElement.dataset.status = extensionData.isActive
+      ? "active"
+      : "inactive";
+  });
 }
