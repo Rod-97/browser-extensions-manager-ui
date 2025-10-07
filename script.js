@@ -97,6 +97,16 @@ function handleSwitchToggle() {
     extensionElement.dataset.status = extensionData.isActive
       ? "active"
       : "inactive";
+
+    const selectedFilterBtn =
+      document.querySelectorAll(".selected")[0].dataset.filter;
+
+    if (
+      (selectedFilterBtn === "Active" && !extensionData.isActive) ||
+      (selectedFilterBtn === "Inactive" && extensionData.isActive)
+    ) {
+      extensionElement.remove();
+    }
   });
 }
 
