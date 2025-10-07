@@ -1,9 +1,12 @@
-import data from "./data.js";
+import importedData from "./data.js";
+
+let data = importedData;
 
 handleDarkLightModes();
 displayExtensions();
 handleSwitchToggle();
 handlefilterButtons();
+handleRemoveButtons();
 
 function handleDarkLightModes() {
   const body = document.body;
@@ -109,5 +112,18 @@ function handlefilterButtons() {
       filterBtn.classList.add("selected");
       displayExtensions(filterBtn.dataset.filter);
     });
+  });
+}
+
+function handleRemoveButtons() {
+  const extensionsContainer = document.querySelectorAll(
+    ".extensions-container"
+  )[0];
+
+  extensionsContainer.addEventListener("click", (event) => {
+    if (!event.target.classList.contains("remove-btn")) return;
+    const extensionElement = event.target.closest(".extension");
+    data = data.filter((ex) => ex.name !== extensionElement.id);
+    extensionElement.remove();
   });
 }
