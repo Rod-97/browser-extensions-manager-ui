@@ -118,6 +118,12 @@ body.dark-mode {
   font-weight: 600;
 }
 
+.extensions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .extension {
   border: 1px solid gray;
   border-radius: 10px;
@@ -223,6 +229,13 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+@media screen and (min-width: 768px) {
+  .extensions-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media screen and (min-width: 1440px) {
   body {
     padding-left: 100px;
@@ -233,5 +246,9 @@ input:checked + .slider:before {
     flex-direction: row;
     justify-content: space-between;
     padding-top: 40px;
+  }
+
+  .extensions-container {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
