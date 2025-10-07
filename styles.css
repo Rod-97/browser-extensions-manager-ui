@@ -246,6 +246,8 @@ input:checked + .slider:before {
     flex-direction: row;
     justify-content: space-between;
     padding-top: 40px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .extensions-container {
