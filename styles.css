@@ -42,6 +42,11 @@ body.light-mode {
   .remove-btn {
     color: var(--neutral-900);
   }
+
+  .filter-btn.selected {
+    background-color: var(--red-500);
+    color: var(--neutral-200);
+  }
 }
 
 body.dark-mode {
@@ -58,6 +63,11 @@ body.dark-mode {
   .extension,
   .remove-btn {
     color: var(--neutral-0);
+  }
+
+  .filter-btn.selected {
+    background-color: var(--red-500);
+    color: var(--neutral-900);
   }
 }
 
