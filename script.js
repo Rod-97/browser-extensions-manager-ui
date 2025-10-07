@@ -91,10 +91,7 @@ function handleSwitchToggle() {
     if (!event.target.classList.contains("switch-input")) return;
 
     const extensionElement = event.target.closest(".extension");
-
-    const extensionData = data.find(
-      (element) => element.name === extensionElement.id
-    );
+    const extensionData = data.find((ex) => ex.name === extensionElement.id);
 
     extensionData.isActive = !extensionData.isActive;
     extensionElement.dataset.status = extensionData.isActive
